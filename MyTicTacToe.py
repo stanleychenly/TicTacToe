@@ -1,6 +1,7 @@
 def main():
     before_game()
-    in_game()
+    player, win, draw = in_game()
+    post_game(player, win, draw)
 
 def before_game(): 
     print("Welcome to Tic Tac Toe!")
@@ -16,7 +17,7 @@ def in_game():
         player_turn(player, board)
         win = check_win(board, player)
         draw = check_draw(board)
-    post_game(player, win, draw)
+    return player, win, draw
         
 def create_board():
     board = [["N","N","N"], ["N","N","N"], ["N","N","N"]]
