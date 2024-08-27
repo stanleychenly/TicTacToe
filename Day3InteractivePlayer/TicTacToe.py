@@ -8,24 +8,31 @@ def main():
 def before_game(): 
     print("Welcome to Tic Tac Toe!")
 
+def first_player():
+    if random.randint(1,2) == 1: 
+        return "Computer"
+    else: 
+        return "User"
+
 def in_game():
+    current_player = first_player()
     player = "O"
     win = False
     draw = False
     board = create_board()
     possible_moves = [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
     while not win and not draw:
-        player = switch_player(player)
+        current_player, player = switch_player(current_player, player)
         print_board(board)
-        selection(player, board, possible_moves)
+        selection(current_player, player, board, possible_moves)
         win = check_win(board, player)
         draw = check_draw(board)
     print_board(board)
     return player, win, draw
 
-def selection(player, board, possible_moves):
+def selection(current_player, player, board, possible_moves):
     selection = None
-    if player == "X":
+    if current_player == "User":
         while True:
             row = int(input("Please enter the row number you want to play:"))
             col = int(input("Please enter the column number you want to play:"))
@@ -43,12 +50,17 @@ def selection(player, board, possible_moves):
     update_board(player, board, row, col)
     return board
 
-def switch_player(player):
+def switch_player(current_player, player):
     if player == "X":
         player = "O"
     else: 
         player = "X"
-    return player
+    if current_player == "User": 
+        current_player = "Computer"
+    else: 
+        current_player = "User"
+
+    return (current_player, player)
 
 def create_board():
     board = [["N","N","N"], ["N","N","N"], ["N","N","N"]]
